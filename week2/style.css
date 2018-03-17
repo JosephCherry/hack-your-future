@@ -1,0 +1,165 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: lightsteelblue;
+}
+
+h1{
+    border: groove 2px;
+    border-radius: 5%;
+    background-color: white;
+    text-align: center; 
+}
+
+h2{
+    border: groove 2px;
+    border-radius: 5%;
+    background-color: white;
+    text-align: center; 
+}
+
+.grid-item{
+    border: groove 2px;
+    border-radius: 5%;
+    background-color: white;
+    grid-row-gap:1em;
+    box-sizing: border-box;
+    width: 80%;
+ 
+}
+
+#grid-floats {
+    box-sizing:border-box;
+  }
+
+ul{
+    list-style: none;
+}
+
+.grid-item h3 p{
+    text-align: center;
+
+}
+    
+    .grid-item img{ 
+        width: 80%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+@media screen and (min-width: 374px) 
+
+  {
+
+  #grid-floats{
+    display: grid;
+   grid-template-columns: 1fr 1fr;
+   grid-template-rows:repeat(5, 1fr);
+}  
+
+.grid-item:nth-child(1) {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+    #grid-flex{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+ 
+        
+    }
+    
+    #grid-flex .grid-item:nth-child(1) {
+        flex-basis: 100%;
+    }
+    
+    #grid-flex .grid-item{
+        width: 50%;
+    }   
+  
+
+
+
+}
+
+@media only screen and (min-width: 668px) 
+
+  {
+
+  #grid-floats{
+    display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+   grid-template-rows:repeat(5, 1fr);
+  }
+
+   #grid-flex{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  
+   
+}
+
+#grid-flex .grid-item:nth-child(1) {
+    flex-basis: 50%;
+}
+
+#grid-flex .grid-item:nth-child(2) {
+    flex-basis: 50%;
+}
+
+#grid-flex .grid-item{
+    width: 33%;
+}   
+
+
+ 
+
+  }
+
+  @media only screen and (min-width: 1200px) 
+{
+
+    #grid-floats{
+        display: grid;
+       grid-template-columns: 1fr 1fr 1fr 1fr;
+       grid-template-rows:repeat(5, 1fr);
+    }  
+
+    .grid-item:nth-child(1) {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        grid-row-start: 1;
+        grid-row-end: 2;
+    }   
+
+    #grid-flex{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+     
+       
+       
+    }
+    
+    #grid-flex .grid-item:nth-child(1) {
+        flex-basis: 50%;
+    }
+    #grid-flex .grid-item:nth-child(2) {
+        flex-basis: 25%;
+    }
+
+    #grid-flex .grid-item:nth-child(3) {
+        flex-basis: 25%
+    }
+    #grid-flex .grid-item{
+        flex-basis: 25%;
+    }  
+} 
+
+
