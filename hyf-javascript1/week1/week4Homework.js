@@ -88,6 +88,17 @@ if (typeof x == typeof y){
     console.log("DIFFERENT TYPE")
 }
 
+var typeOfArray = [x, y, z, g, t];
+
+for(var i = typeOfArray[0]; i < typeOfArray.length; i++){
+    console.log(`index ${i} has type ${typeof typeOfArray[i]}`);
+    if (typeof i == typeof x){
+        console.log('x is the same type as', i)
+    } else {
+        console.log('x is not the same type as', i)
+    }
+}
+
 x = 7;
 
 x = x % 3;
