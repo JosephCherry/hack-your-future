@@ -1,0 +1,45 @@
+body{
+    background-color: aquamarine;
+    color: azure;
+    font-family: Arial, Helvetica, sans-serif;
+   
+}
+
+button{
+    border-radius: 12px;
+    align-content: center;
+    margin-bottom: 5em;
+    margin-left: 25%;
+    width: 50%;
+    padding: 10px;
+    background-color: yellowgreen;
+    color: azure;
+    font-size: 20px;
+}
+
+div {
+    width: 50%;
+    align-content: center;
+    margin-left: 25%;
+}
+
+h1, h4, i{
+    margin: auto;
+    width: 50%;
+    padding: 1%;
+    background-color: yellowgreen;
+}
+
+img {
+    width: 50%;
+    align-content: center;
+}
+
+.overlay {
+    margin: auto;
+    width: 100%;
+    padding: 10px;
+    align-content: center;
+    background-color: yellowgreen;
+}
+
