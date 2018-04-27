@@ -1,0 +1,15 @@
+table {
+   background-color: rgb(124, 171, 212);
+   border: 1px solid;
+
+}
+
+
+
+th, td, img {
+    padding: 1em;
+    border: 1px solid;
+    background-color:aliceblue;
+    width: 5em;
+}
+
