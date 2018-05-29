@@ -3,7 +3,23 @@ function main() {
     var HyfContributorHttps = null;
 
 
-    getRepositories(HyfRepositoriesHttps, xhrCallback);
+    getRepositories(HyfRepositoriesHttps).then(response =>{
+        repositories = JSON.parse(response);
+        showRepositoriesInSelect(repositories)
+        console.log("Success!", response);
+},      function(error) {
+            console.error("Failed!", error);
+       
+    })
+
+    /*getContributors(HyfContributorHttps).then(response =>{
+        contributors = JSON.parse(response);
+        showContributorsInList(contributors);
+        console.log("Success!", response);
+},      function(error) {
+            console.error("Failed!", error);
+       
+    })*/
 
 
     console.log('main!');
@@ -11,7 +27,7 @@ function main() {
 }
 var repositories = [];
 var contributors = [];
-
+/*
 // Callback that handles response from server (when i get the data)
 function xhrCallback(data) {
     //console.log('data from server', data);
@@ -28,6 +44,7 @@ function xhrCallbackContributors(data) {
     
     showContributorsInList(contributors);
 }
+*/
 
 function showRepositoriesInSelect(repositories) {
     const repositoriesSelectElement = document.querySelector('#repositories');
@@ -111,13 +128,55 @@ function getSelectedRepository(repositoriesSelectElement) {
 function getSelectedRepositoryContributors(selectedRepository){
     HyfContributorHttps = selectedRepository.contributors_url;
     console.log(HyfContributorHttps);
-    getContributors(HyfContributorHttps, xhrCallbackContributors);
+    
+    getContributors(HyfContributorHttps).then(response =>{
+        contributors = JSON.parse(response);
+        showContributorsInList(contributors);
+        console.log("Success!", response);
+},      function(error) {
+            console.error("Failed!", error);
+       
+    })
+
+    showContributorsInList(contributors);
 }
 
 
 
 // Function that makes an server request (API call)
-function getRepositories(theUrl, callback) {
+function getRepositories(theUrl) {
+  return new Promise((resolve, reject) => {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+    xmlHttp.onload = () => {
+        if(xmlHttp.status == 200){
+            resolve(xmlHttp.response);
+        } else {
+            reject(Error(xmlHttp.statusText))
+        }
+    }
+    xmlHttp.send();
+});
+}
+
+function getContributors(theUrl) {
+    return new Promise((resolve, reject) => {
+      var xmlHttpContributors = new XMLHttpRequest();
+      xmlHttpContributors.open("GET", theUrl, true); // true for asynchronous 
+      xmlHttpContributors.onload = () => {
+          if(xmlHttpContributors.status == 200){
+              resolve(xmlHttpContributors.response);
+          } else {
+              reject(Error(xmlHttpContributors.statusText))
+          }
+      }
+      xmlHttpContributors.send();
+  });
+  }
+
+
+
+/*function getContributors(theUrl) {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
@@ -126,14 +185,4 @@ function getRepositories(theUrl, callback) {
     xmlHttp.open("GET", theUrl, true); // true for asynchronous 
     xmlHttp.send(null);
 }
-
-function getContributors(theUrl, callback) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function () {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            callback(xmlHttp.responseText);
-    }
-    xmlHttp.open("GET", theUrl, true); // true for asynchronous 
-    xmlHttp.send(null);
-}
-
+*/
