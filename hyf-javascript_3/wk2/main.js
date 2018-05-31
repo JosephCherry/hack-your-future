@@ -13,6 +13,7 @@ var contributors = [];
 
 
 function showRepositoriesInSelect(repositories) {
+    
     const repositoriesSelectElement = document.querySelector('#repositories');
     repositoriesSelectElement.setAttribute('onchange', "getSelectedRepository(this)");
 
@@ -27,6 +28,7 @@ function showRepositoriesInSelect(repositories) {
     
 } 
 function showContributorsInList(contributors) {
+    
     const contributorsListElement = document.querySelector('#contributorList');
     // Removes current list.
     while( contributorsListElement.hasChildNodes()){
@@ -102,7 +104,7 @@ function getSelectedRepositoryContributors(selectedRepository){
 
   function getRepositories(theUrl){
       fetch(theUrl) 
-
+        
       .then(function(response){
           return response.json()
         .then(function(data){
@@ -119,6 +121,7 @@ function getSelectedRepositoryContributors(selectedRepository){
 }
 
 function getContributors(theUrl){
+    openModal()
     fetch(theUrl) 
 
     .then(function(response){
@@ -126,6 +129,7 @@ function getContributors(theUrl){
       .then(function(data){
       contributors = data
       console.log("Success!", contributors);
+      closeModal();
       showContributorsInList(contributors)
       })       
 
@@ -136,4 +140,10 @@ function getContributors(theUrl){
   })
 }
      
+function openModal() {
+    document.getElementById('modal').style.display = 'block';
+}
 
+function closeModal() {
+document.getElementById('modal').style.display = 'none';
+}
