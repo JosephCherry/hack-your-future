@@ -2,24 +2,7 @@ function main() {
     const HyfRepositoriesHttps = 'https://api.github.com/orgs/HackYourFuture/repos?per_page=100';
     var HyfContributorHttps = null;
 
-
-    getRepositories(HyfRepositoriesHttps).then(response =>{
-        repositories = JSON.parse(response);
-        showRepositoriesInSelect(repositories)
-        console.log("Success!", response);
-},      function(error) {
-            console.error("Failed!", error);
-       
-    })
-
-    /*getContributors(HyfContributorHttps).then(response =>{
-        contributors = JSON.parse(response);
-        showContributorsInList(contributors);
-        console.log("Success!", response);
-},      function(error) {
-            console.error("Failed!", error);
-       
-    })*/
+getRepositories(HyfRepositoriesHttps);
 
 
     console.log('main!');
@@ -27,24 +10,7 @@ function main() {
 }
 var repositories = [];
 var contributors = [];
-/*
-// Callback that handles response from server (when i get the data)
-function xhrCallback(data) {
-    //console.log('data from server', data);
-    repositories = JSON.parse(data);
-    console.log('parsed repo data:', repositories);
 
-    showRepositoriesInSelect(repositories);
-}
-// Callback that handels contributor reponse from server. 
-function xhrCallbackContributors(data) {
-    //console.log('data from server', data);
-    contributors = JSON.parse(data);
-    console.log('parsed contributor data:', contributors);
-    
-    showContributorsInList(contributors);
-}
-*/
 
 function showRepositoriesInSelect(repositories) {
     const repositoriesSelectElement = document.querySelector('#repositories');
@@ -128,61 +94,46 @@ function getSelectedRepository(repositoriesSelectElement) {
 function getSelectedRepositoryContributors(selectedRepository){
     HyfContributorHttps = selectedRepository.contributors_url;
     console.log(HyfContributorHttps);
-    
-    getContributors(HyfContributorHttps).then(response =>{
-        contributors = JSON.parse(response);
-        showContributorsInList(contributors);
-        console.log("Success!", response);
-},      function(error) {
+    getContributors(HyfContributorHttps);
+
+}
+
+
+
+  function getRepositories(theUrl){
+      fetch(theUrl) 
+
+      .then(function(response){
+          return response.json()
+        .then(function(data){
+        repositories = data
+        console.log("Success!", repositories);
+        showRepositoriesInSelect(repositories)
+        })       
+
+     .catch(function(error) {
             console.error("Failed!", error);
        
+        })
     })
-
-    showContributorsInList(contributors);
 }
 
+function getContributors(theUrl){
+    fetch(theUrl) 
 
+    .then(function(response){
+        return response.json()
+      .then(function(data){
+      contributors = data
+      console.log("Success!", contributors);
+      showContributorsInList(contributors)
+      })       
 
-// Function that makes an server request (API call)
-function getRepositories(theUrl) {
-  return new Promise((resolve, reject) => {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", theUrl, true); // true for asynchronous 
-    xmlHttp.onload = () => {
-        if(xmlHttp.status == 200){
-            resolve(xmlHttp.response);
-        } else {
-            reject(Error(xmlHttp.statusText))
-        }
-    }
-    xmlHttp.send();
-});
+   .catch(function(error) {
+          console.error("Failed!", error);
+     
+      })
+  })
 }
+     
 
-function getContributors(theUrl) {
-    return new Promise((resolve, reject) => {
-      var xmlHttpContributors = new XMLHttpRequest();
-      xmlHttpContributors.open("GET", theUrl, true); // true for asynchronous 
-      xmlHttpContributors.onload = () => {
-          if(xmlHttpContributors.status == 200){
-              resolve(xmlHttpContributors.response);
-          } else {
-              reject(Error(xmlHttpContributors.statusText))
-          }
-      }
-      xmlHttpContributors.send();
-  });
-  }
-
-
-
-/*function getContributors(theUrl) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function () {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            callback(xmlHttp.responseText);
-    }
-    xmlHttp.open("GET", theUrl, true); // true for asynchronous 
-    xmlHttp.send(null);
-}
-*/
