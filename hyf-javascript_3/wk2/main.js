@@ -85,9 +85,9 @@ const repositoriesInformationElement = document.querySelector('.repoinfo');
 }
 
 function getSelectedRepository(repositoriesSelectElement) {
-    const selectedRepository = repositories.filter(repository => {
+    const selectedRepository = repositories.find(repository => {
         return repository.id == Number.parseInt(repositoriesSelectElement.value);
-    })[0];
+    });
     console.log('Selected repository', selectedRepository);
     getSelectedRepositoryContributors(selectedRepository);
     showRepositoryInformation(selectedRepository);
@@ -135,7 +135,7 @@ function getContributors(theUrl){
 
    .catch(function(error) {
           console.error("Failed!", error);
-     
+          closeModal();
       })
   })
 }
