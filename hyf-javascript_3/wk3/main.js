@@ -2,7 +2,7 @@ function main() {
     const HyfRepositoriesHttps = 'https://api.github.com/orgs/HackYourFuture/repos?per_page=100';
     var HyfContributorHttps = null;
 
-getRepositories(HyfRepositoriesHttps);
+    getRepositories(HyfRepositoriesHttps);
 
 
     console.log('main!');
@@ -13,7 +13,7 @@ var contributors = [];
 
 
 function showRepositoriesInSelect(repositories) {
-    
+
     const repositoriesSelectElement = document.querySelector('#repositories');
     repositoriesSelectElement.setAttribute('onchange', "getSelectedRepository(this)");
 
@@ -25,13 +25,13 @@ function showRepositoriesInSelect(repositories) {
         repositoriesSelectElement.appendChild(optionElement);
     });
 
-    
-} 
+
+}
 function showContributorsInList(contributors) {
-    
+
     const contributorsListElement = document.querySelector('#contributorList');
     // Removes current list.
-    while( contributorsListElement.hasChildNodes()){
+    while (contributorsListElement.hasChildNodes()) {
         contributorsListElement.removeChild(contributorsListElement.firstChild);
     }
     // Renders new list. 
@@ -51,37 +51,37 @@ function showContributorsInList(contributors) {
     })
 }
 
-function showRepositoryInformation(selectedRepository){
-const repositoriesInformationElement = document.querySelector('.repoinfo');
+function showRepositoryInformation(selectedRepository) {
+    const repositoriesInformationElement = document.querySelector('.repoinfo');
 
-        while( repositoriesInformationElement.hasChildNodes()){
-            repositoriesInformationElement.removeChild(repositoriesInformationElement.firstChild);
-        }
-        
-        const repoContainer = document.createElement('div');
-        repoContainer.setAttribute('class', 'repoContainer');
+    while (repositoriesInformationElement.hasChildNodes()) {
+        repositoriesInformationElement.removeChild(repositoriesInformationElement.firstChild);
+    }
 
-        const repoLink = document.createElement('a');
-        repoLink.setAttribute('target', '_blank');
-        repoLink.href = selectedRepository.html_url;
-        repoLink.innerText = selectedRepository.name;
+    const repoContainer = document.createElement('div');
+    repoContainer.setAttribute('class', 'repoContainer');
 
-        const repoDescription = document.createElement('h3');
-        repoDescription.innerText = "Description: " + selectedRepository.description;
-        
+    const repoLink = document.createElement('a');
+    repoLink.setAttribute('target', '_blank');
+    repoLink.href = selectedRepository.html_url;
+    repoLink.innerText = selectedRepository.name;
 
-        const repoForks = document.createElement('h3');
-        repoForks.innerText = "Forks: " + selectedRepository.forks
+    const repoDescription = document.createElement('h3');
+    repoDescription.innerText = "Description: " + selectedRepository.description;
 
-        const repoUpdate = document.createElement('h3');
-        repoUpdate.innerText = "Last Updated: " + selectedRepository.updated_at;
 
-        repoContainer.appendChild(repoLink);
-        repoContainer.appendChild(repoDescription);
-        repoContainer.appendChild(repoForks);
-        repoContainer.appendChild(repoUpdate);
-        repositoriesInformationElement.appendChild(repoContainer);
-        
+    const repoForks = document.createElement('h3');
+    repoForks.innerText = "Forks: " + selectedRepository.forks
+
+    const repoUpdate = document.createElement('h3');
+    repoUpdate.innerText = "Last Updated: " + selectedRepository.updated_at;
+
+    repoContainer.appendChild(repoLink);
+    repoContainer.appendChild(repoDescription);
+    repoContainer.appendChild(repoForks);
+    repoContainer.appendChild(repoUpdate);
+    repositoriesInformationElement.appendChild(repoContainer);
+
 }
 
 function getSelectedRepository(repositoriesSelectElement) {
@@ -93,57 +93,53 @@ function getSelectedRepository(repositoriesSelectElement) {
     showRepositoryInformation(selectedRepository);
 }
 
-function getSelectedRepositoryContributors(selectedRepository){
+function getSelectedRepositoryContributors(selectedRepository) {
     HyfContributorHttps = selectedRepository.contributors_url;
     console.log(HyfContributorHttps);
     getContributors(HyfContributorHttps);
 
 }
 
-
-
-  function getRepositories(theUrl){
-      fetch(theUrl) 
-        
-      .then(function(response){
-          return response.json()
-        .then(function(data){
-        repositories = data
+async function getRepositories(theUrl) {
+    try {
+        const response = await fetch(theUrl)
+        const data = await response.json()
+        repositories = data;
         console.log("Success!", repositories);
         showRepositoriesInSelect(repositories)
-        })       
+    }
 
-     .catch(function(error) {
-            console.error("Failed!", error);
-       
-        })
-    })
+    catch (err) {
+        function renderError(err) {
+            console.log(err);
+        }
+    }
 }
 
-function getContributors(theUrl){
+
+async function getContributors(theUrl) {
     openModal()
-    fetch(theUrl) 
+    try {
+        let response = await fetch(theUrl)
+        let data = await response.json()
+        contributors = data
+        console.log("Success!", contributors);
+        closeModal();
+        showContributorsInList(contributors);
+    }
 
-    .then(function(response){
-        return response.json()
-      .then(function(data){
-      contributors = data
-      console.log("Success!", contributors);
-      closeModal();
-      showContributorsInList(contributors)
-      })       
+    catch (err) {
+        function renderError(err) {
+            console.log(err);
+        }
+    }
 
-   .catch(function(error) {
-          console.error("Failed!", error);
-          closeModal();
-      })
-  })
 }
-     
+
 function openModal() {
     document.getElementById('modal').style.display = 'block';
 }
 
 function closeModal() {
-document.getElementById('modal').style.display = 'none';
+    document.getElementById('modal').style.display = 'none';
 }
