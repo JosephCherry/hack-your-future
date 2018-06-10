@@ -1,5 +1,5 @@
 'use strict';
-{
+
   const HyfRepositoriesHttps = 'https://api.github.com/orgs/HackYourFuture/repos?per_page=100';
   var HyfContributorHttps = null;
 
@@ -158,4 +158,3 @@ function getSelectedRepository(repositoriesSelectElement) {
   console.log('Selected repository', selectedRepository);
   let Repo = new Repository(selectedRepository);
   Repo = new Repository(selectedRepository);
-}
