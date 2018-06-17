@@ -5,6 +5,7 @@ class App {
     
     async initialize(url) {
         try {
+            spinner.openModal();
             const response = await fetch(url)
             const data = await response.json()
             repositories = data;
@@ -79,4 +80,11 @@ const HyfRepositoriesHttps = 'https://api.github.com/orgs/HackYourFuture/repos?p
 let repositories = [];
 let contributors = [];
 
-window.onload = () => new App(HyfRepositoriesHttps);
+window.onload = () => { spinner = new Loader();
+    new App(HyfRepositoriesHttps);
+        
+    }
+
+
+
+let spinner = null;
